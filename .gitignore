@@ -1,0 +1,58 @@
+# -------------------------
+# Python
+# -------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyc
+*.pyd
+*.pdb
+*.egg-info/
+*.so
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv/
+
+# Jupyter Notebooks Checkpoints
+.ipynb_checkpoints/
+
+# -------------------------
+# ML / Data Science Stuff
+# -------------------------
+# Model weights
+*.pt
+*.pth
+*.pkl
+*.joblib
+
+# Large datasets
+data/raw/
+data/pcap/
+*.csv
+*.pcap
+*.pcapng
+
+# Intermediate artifacts
+*.npy
+*.npz
+
+# Logs
+logs/
+*.log
+
+# Cache
+.cache/
+__cache__/
+
+# -------------------------
+# macOS junk files
+# -------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VS Code
+.vscode/
