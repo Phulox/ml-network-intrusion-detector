@@ -4,12 +4,13 @@ import torch
 import torch.nn as nn
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
+from feature_config import FEATURES
 
 #load in dataset
 
 df = pd.read_csv("data/processed/train.csv")
 
-X = df.drop(columns=["label"]).values.astype("float32")
+X = df[FEATURES].values.astype("float32")
 y = df["label"].values.astype("float32")
 
 # Train-test split
