@@ -8,6 +8,19 @@ import torch.nn as nn
 from datetime import datetime
 from dotenv import load_dotenv
 import os
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.FileHandler("detector.log"),
+        logging.StreamHandler()
+    ]
+)
+
+logger = logging.getLogger(__name__)
+
 
 load_dotenv()
 
@@ -86,7 +99,11 @@ def process_flow(flow: dict):
     ts = datetime.utcnow()
 
     if score >= ALERT_THRESHOLD:
-        print(f"[ALERT] score={score:.3f}")
+        logger.warning(
+        f"ALERT src={flow.get('src_ip')}:{flow.get('sport')} "
+        f"dst={flow.get('dst_ip')}:{flow.get('dport')} "
+        f"proto={flow.get('proto')} score={score:.3f}"
+    )
 
         cur.execute("""
             INSERT INTO alerts (ts, src_ip, dst_ip, sport, dport, proto, score)
@@ -102,8 +119,13 @@ def process_flow(flow: dict):
         ))
 
         conn.commit()
+        
     else:
-        print(f"[OK]    score={score:.3f}")
+        logger.info(
+        f"OK src={flow.get('src_ip')}:{flow.get('sport')} "
+        f"dst={flow.get('dst_ip')}:{flow.get('dport')} "
+        f"proto={flow.get('proto')} score={score:.3f}"
+    )
 
 
 
