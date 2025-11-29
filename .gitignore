@@ -57,3 +57,5 @@ __cache__/
 
 # VS Code
 .vscode/
+
+src/feature_config.py
