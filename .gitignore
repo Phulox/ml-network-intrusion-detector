@@ -58,4 +58,9 @@ __cache__/
 # VS Code
 .vscode/
 
+#Other
 src/feature_config.py
+
+detector.log
+
+model/*
