@@ -1,9 +1,8 @@
+torch
 pandas
 numpy
 scikit-learn
-torch
-matplotlib
+psycopg2-binary
 flask
-scapy
-joblib
-pyyaml
+python-dotenv
+

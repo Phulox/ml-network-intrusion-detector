@@ -1,13 +1,45 @@
-## ML Network Intrusion Detector
+# ML-Powered Network Intrusion Detector
 
-Traffic (csv/pcap) → Feature Extractor → PyTorch Model → Risk Score → Alerts SQLite → Dashboard
+This project is a mini **Network Intrusion Detection System (IDS)** that uses
+a **Multilayer Perceptron (MLP)** to classify network flows as normal or attack,
+with:
 
-## Week Plan:
+- Python + PyTorch for the ML model
+- PostgreSQL to store alerts
+- Flask dashboard to visualize alerts
 
-Day 1 – Setup, dataset, structure
-Day 2 – Feature extraction (UNSW)
-Day 3 – Train PyTorch MLP
-Day 4 – Real-time detection logic
-Day 5 – Flask dashboard + API
-Day 6 – Docker + testing + polish
-Day 7 – Demo + documentation
+## Architecture
+
+1. **Preprocessing (Day 2)**
+
+   - Clean UNW-NB15-style network flow dataset
+   - Select features and save `train.csv`
+
+2. **Model Training (Day 3)**
+
+   - MLP with 2 hidden layers (128 → 64) + Sigmoid output
+   - StandardScaler normalization (per-feature mean/std)
+   - Saves:
+     - `model/model.pt` (trained weights)
+     - `model/scaler_mean.npy`
+     - `model/scaler_scale.npy`
+
+3. **Detector Engine (Day 4)**
+
+   - `detector.py`:
+     - loads model + scaler
+     - uses `FeatureExtractor` with shared `FEATURES` list
+     - scores flows with the MLP
+     - writes high-score alerts to PostgreSQL (`alerts` table)
+
+4. **Dashboard (Day 5)**
+
+   - `dashboard.py`:
+     - Flask app that queries `alerts` table
+     - `templates/alerts.html` shows recent alerts in a web UI
+
+5. **Evaluation (Day 6)**
+   - `evaluate_model.py`:
+     - computes accuracy, precision, recall, F1, confusion matrix
+     - evaluates at multiple thresholds (0.5, 0.7, 0.8, 0.9)
+     - saves results to `model/metrics.json`
